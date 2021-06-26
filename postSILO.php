@@ -45,7 +45,7 @@ function output_silo(){
 	$category_slug = $wpdb->get_results("SELECT slug FROM `wp_terms` WHERE term_id={$taxonomy_id}")[0]->slug;
 	
 	//Get all post IDs in this category
-	$post_ids_in_category = $wpdb->get_results("SELECT object_id FROM `wp_term_relationships` WHERE term_taxonomy_id={$taxonomy_id}");
+	$post_ids_in_category = count($posts_in_category);
 	
 	//Cycle through every post in this category and get its link and title
 	for ($i = 0; $i < $posts_in_category; $i++) {
