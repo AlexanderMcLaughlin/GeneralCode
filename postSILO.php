@@ -52,11 +52,15 @@ function output_silo(){
 		
 		//Get the name of the post from posts
 		$postname = $wpdb->get_results("SELECT post_title FROM `wp_posts` WHERE post_status='publish' AND post_type='post' AND ID={$post_ids_in_category[$i]->object_id}")[0]->post_title;
+		
+		
 		//Get slug of the post uri from yoast 
 		$permalink = $wpdb->get_results("SELECT permalink FROM `wp_yoast_indexable` WHERE object_type='post' AND object_id={$post_ids_in_category[$i]->object_id}")[0]->permalink;
 		
 		//Add on to the final html that will be published
-		$return_html .= "<tr><td><ul><li class='silo-style'><a href='{$permalink}'>{$postname}</a></li></ul></td></tr>";
+		if($postname!="" && $permalink!="") {
+			$return_html .= "<tr><td><ul><li class='silo-style'><a href='{$permalink}'>{$postname}</a></li></ul></td></tr>";
+		}
 	}
 	
 	
