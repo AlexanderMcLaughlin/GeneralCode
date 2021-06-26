@@ -33,19 +33,19 @@ function output_silo(){
 	}
 	unset($i);
 	
+	//Get the slug of the category
+	$category_slug = $wpdb->get_results("SELECT slug FROM `wp_terms` WHERE term_id={$taxonomy_id}")[0]->slug;
+	
+	//Get all post IDs in this category
+	$post_ids_in_category = $wpdb->get_results("SELECT object_id FROM `wp_term_relationships` WHERE term_taxonomy_id={$taxonomy_id}");
+	
 	//Get number of posts in this category
-	$posts_in_category = $wpdb->get_results("SELECT count FROM `wp_term_taxonomy` WHERE term_taxonomy_id={$taxonomy_id}")[0]->count;
+	$posts_in_category = count($post_ids_in_category);
 	
 	//If there is just this post in this category then return "nothing"
 	if($posts_in_category<=1) {
 		return " ";
 	}
-	
-	//Get the slug of the category
-	$category_slug = $wpdb->get_results("SELECT slug FROM `wp_terms` WHERE term_id={$taxonomy_id}")[0]->slug;
-	
-	//Get all post IDs in this category
-	$post_ids_in_category = count($posts_in_category);
 	
 	//Cycle through every post in this category and get its link and title
 	for ($i = 0; $i < $posts_in_category; $i++) {
